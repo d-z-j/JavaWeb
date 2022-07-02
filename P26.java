@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class P26 {
     public static void main(String[] args) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/study", "root", "1607980231..");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/study", "root", "123456");
              Statement statement = connection.createStatement()){
 
             ResultSet set = statement.executeQuery("select * from Study.student");

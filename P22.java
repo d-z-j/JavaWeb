@@ -3,7 +3,7 @@ import java.sql.*;
 public class P22 {
     public static void main(String[] args) {
         //1、通过DriverManager来获得数据库连接
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/study", "root", "1607980231..");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/study", "root", "123456");
              //2、创建一个用于执行SQL的Statement对象
             Statement statement = connection.createStatement()){
             //3、执行SQL语句，并得到结果

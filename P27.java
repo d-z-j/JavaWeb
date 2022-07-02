@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class P27 {
     public static void main(String[] args) {
         try(Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/study", "root", "1607980231..");
+                "jdbc:mysql://localhost:3306/study", "root", "123456");
             Statement statement = connection.createStatement();
             Scanner scanner = new Scanner(System.in)){
 

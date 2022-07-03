@@ -1,20 +1,12 @@
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+package entity;
+
+import lombok.Data;
 import lombok.experimental.Accessors;
 
-@Setter
-@Getter
-@ToString
+@Data
 @Accessors(chain = true)
-@AllArgsConstructor
 public class Student {
-    @ToString.Include(rank = 2,name = "学号")
-    Integer sid;
-    @ToString.Include(rank = 1,name = "姓名")
+    int sid;
     String name;
-    @ToString.Include(rank = 0,name = "性别")
     String sex;
-
 }

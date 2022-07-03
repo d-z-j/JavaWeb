@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.TestMapper">
+
+    <select id="selectStudent" resultType="student">
+        select * from study.student
+    </select>
+
+    <select id="getStudentBySid" resultType="student">
+        select * from study.student where sid = #{sid}
+    </select>
+
+    <insert id="addStudent">
+        insert into study.student(sid,name,sex) values (#{sid},#{name},#{sex})
+    </insert>
+    
+    <delete id="deleteStudent">
+        delete from study.student where sid=#{sid}
+    </delete>
+
+</mapper>

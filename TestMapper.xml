@@ -2,22 +2,75 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.TestMapper">
+<!-- 映射器 告诉mybatis如何将数据库中的内容映射到Java实体类-->
 
-    <select id="selectStudent" resultType="student">
+<!-- namespace 用来区分不同的映射；可以绑定不同的接口，实现接口化编程（将接口和映射器关联起来，一般将相互关联的接口和映射器放在同一个包下）-->
+<mapper namespace="mapper.TestMapper">
+    <!-- select 查询操作。id表示每一个select的名称，resultType是它的返回值类型（也就是要将这个查询结果映射为那一个类）
+         resultMap可以自定义数据库中每一列映射到实体类中的那一字段，type是返回类型（定义之后，将操作语句中resultMap的值写为对应的resultMap的id）-->
+
+    <resultMap id="Test" type="Student">
+        <!-- 用 result 自定义映射关系： column 表示数据库中的列 property 表示实体类中的属性     -->
+        <result column="name" property="sex"/>
+        <result column="sex" property="name"/>
+    </resultMap>
+
+    <select id="selectStudent" resultMap="Test">
         select * from study.student
     </select>
 
     <select id="getStudentBySid" resultType="student">
+        # 此处的 #{sid} 需要填入我们给定的属性，相当于方法的一个参数
         select * from study.student where sid = #{sid}
     </select>
 
+    <!-- 插入操作 -->
     <insert id="addStudent">
         insert into study.student(sid,name,sex) values (#{sid},#{name},#{sex})
     </insert>
-    
+
+    <!-- 删除操作 -->
     <delete id="deleteStudent">
         delete from study.student where sid=#{sid}
     </delete>
+
+    <!-- 复杂查询   -->
+
+    <!-- 一对多 -->
+    <select id="getTeacherByTid" resultMap="asTeacher">
+        select *, study.teacher.name as tname from study.student inner join study.teach on student.sid = teach.sid
+                                                                 inner join study.teacher on teach.tid = teacher.tid where teach.tid = #{tid}
+    </select>
+
+    <resultMap id="asTeacher" type="Teacher">
+        <!-- id标签用于在多条记录中辨别是否为同一个对象的数据 -->
+        <id column="tid" property="tid"/>
+        <result column="tname" property="name"/>
+        <!-- collection标签，将所获取的对象变成一个集合。 property 设置那个属性接收获取到的集合 ofType 设置集合中元素的类型      -->
+        <collection property="studentList" ofType="Student">
+            <!-- collection中的内容 就是ofType类型的映射关系 -->
+            <id property="sid" column="sid"/>
+            <result column="name" property="name"/>
+            <result column="sex" property="sex"/>
+        </collection>
+    </resultMap>
+
+    <!--多对一-->
+    <select id="selectStudent1" resultMap="test2">
+        select *, study.teacher.name as tname from study.student left join study.teach on student.sid = teach.sid
+                                                                 left join study.teacher on teach.tid = teacher.tid where teach.tid = #{tid}
+    </select>
+    
+    <resultMap id="test2" type="Student">
+        <id column="sid" property="sid"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <!-- association标签表示关联 将Student中teacher属性转变为Teacher类 -->
+        <association property="teacher" javaType="Teacher">
+            <!-- association中的内容是javaType设定类中的映射关系 -->
+            <id column="tid" property="tid"/>
+            <result column="tname" property="name"/>
+        </association>
+    </resultMap>
 
 </mapper>

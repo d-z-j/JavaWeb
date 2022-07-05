@@ -6,6 +6,15 @@
 
 <!-- namespace 用来区分不同的映射；可以绑定不同的接口，实现接口化编程（将接口和映射器关联起来，一般将相互关联的接口和映射器放在同一个包下）-->
 <mapper namespace="mapper.TestMapper">
+
+    <!-- 开启二级缓存，并配置
+         如果不希望某一个方法开启，可以到该方法对应的映射标签设置 useCache = "false"-->
+    <cache
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true"/>
+
     <!-- select 查询操作。id表示每一个select的名称，resultType是它的返回值类型（也就是要将这个查询结果映射为那一个类）
          resultMap可以自定义数据库中每一列映射到实体类中的那一字段，type是返回类型（定义之后，将操作语句中resultMap的值写为对应的resultMap的id）-->
 
@@ -19,8 +28,8 @@
         select * from study.student
     </select>
 
+    <!-- 此处的 #{sid} 需要填入我们给定的属性，相当于方法的一个参数-->
     <select id="getStudentBySid" resultType="student">
-        # 此处的 #{sid} 需要填入我们给定的属性，相当于方法的一个参数
         select * from study.student where sid = #{sid}
     </select>
 
@@ -60,7 +69,7 @@
         select *, study.teacher.name as tname from study.student left join study.teach on student.sid = teach.sid
                                                                  left join study.teacher on teach.tid = teacher.tid where teach.tid = #{tid}
     </select>
-    
+
     <resultMap id="test2" type="Student">
         <id column="sid" property="sid"/>
         <result column="name" property="name"/>

@@ -1,27 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
-
+<!--配置文件中，每一项配置是有顺序的（可以点进 configuration 中查看）-->
 <configuration>
+    <!-- 设置   -->
+    <settings>
+        <!-- 开启驼峰命名映射 -->
+<!--        <setting name="mapUnderscoreToCamelCase" value="true"/>-->
+        <!-- 配置二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!-- 将某一实体类，取别名，简化mapper中resultType内容的书写（typeAlias）
+         也可以让mybatis扫描包，自动将所有类取别名，别名为首字母小写的类名（package）-->
     <typeAliases>
+<!--        <typeAlias type="entity.Student" alias="lbwnb"/>-->
         <package name="entity"/>
     </typeAliases>
 
+    <!--用户环境配置，默认使用id为development的环境用户-->
     <environments default="development">
+        <!--  id为development的环境用户  -->
         <environment id="development">
+            <!-- 事务管理 -->
             <transactionManager type="JDBC"/>
+            <!--  数据源  -->
             <dataSource type="POOLED">
+                <!-- 配置驱动 -->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <!-- 数据库url -->
                 <property name="url" value="jdbc:mysql://localhost:3306/study"/>
+                <!-- 用户名和密码 -->
                 <property name="username" value="root"/>
                 <property name="password" value="123456"/>
             </dataSource>
         </environment>
     </environments>
 
+    <!--告知mybatis，自己创建的映射器的位置   使用resource 指定位置
+        使用注解开发时，使用class 指定类  或者映射很多且都使用注解开发的情况用package-->
     <mappers>
-        <mapper resource="mapper/TestMapper.xml"></mapper>
+        <package name="mapper"/>
     </mappers>
 
 </configuration>

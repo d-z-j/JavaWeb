@@ -32,3 +32,8 @@ button:focus{
     outline: 0;
     background: #3b4f72
 }
+
+.illegal-pwd{
+    border: red 1px solid !important;
+    box-shadow: 0 0 5px red;
+}

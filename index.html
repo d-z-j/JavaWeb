@@ -5,6 +5,7 @@
     <title>lbwnb</title>
     <link rel="icon" href="icon.png" type="image/x-icon"/>
     <link href="style.css" rel="stylesheet">
+    <script src="test.js"></script>
 </head>
 <body>
     <h1>登录到系统</h1>
@@ -12,16 +13,16 @@
     <hr>
     <div>
         <label>
-            <input type="text" placeholder="用户名">
+            <input type="text" placeholder="用户名" >
         </label>
     </div>
     <div>
         <label>
-            <input type="password" placeholder="密码">
+            <input type="password" id="pwd" placeholder="密码" oninput="f(this)">
         </label>
     </div>
     <div>
-        <button>登录</button>
+        <button onclick="http()">登录</button>
     </div>
 </form>
 </body>
